@@ -3,7 +3,7 @@ from os import listdir
 import cv2 
 import pytesseract 
 import numpy as np
-from rem_lines import ignore_lines, remove_lines, segment_columns
+from rem_lines import ignore_lines, segment_columns
 from merge_boxes import make_rows, merge_boxes
 from graph import make_graph
 #from correctPerspective import getAngle, rotate_image
@@ -136,6 +136,7 @@ def get_text(save_dir,file_name, write_ = False):
 			# Apply OCR on the cropped image 
 
 			text = ""
+			# pytesseract.pytesseract.tesseract_cmd = r'C:\Users\USER\AppData\Local\Tesseract-OCR\tesseract.exe'
 			text = pytesseract.image_to_string(cropped, lang='eng', config='--psm 6')
 			p=text.split(' ')
 			for tex in p:
@@ -182,7 +183,7 @@ def get_text(save_dir,file_name, write_ = False):
 
 def main():
 	
-	path = 'F:/Flipkart/New folder/helli/invoice-extractor/invoice_images/'
+	path = './invoice_images/'
 
 	folders = listdir(path)
 	#print(pdfs)
@@ -190,9 +191,11 @@ def main():
 		dir_path = path + folder + "/"
 		images = listdir(dir_path)
 		if(folder!="Sample3"): continue
+		import pdb;pdb.set_trace()
 		for image in images:
 			if len(image.split('.')[0])>1:continue
 			file_name = image
+			print("***")
 			#file_path = dir_path
 			#mkdir(target)
 			get_text(dir_path,file_name,write_ = False)
